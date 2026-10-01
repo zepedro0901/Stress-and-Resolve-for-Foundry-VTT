@@ -230,7 +230,6 @@ sr.openParty();
 ```
 
 ## Credits
-
-- Rules: *Darkest Dungeons and Dragons* v1.4 by zecron8, used with permission.
+- Inspired by the Red Hook Studios's Darkest Dungeon videogame
 - Icons: Foundry VTT core icons. No Red Hook Studios art is included.
 - Sounds: made for this module.
