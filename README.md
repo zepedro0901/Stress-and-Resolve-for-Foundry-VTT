@@ -1,0 +1,1 @@
+# Stress-and-Resolve-for-Foundry-VTT
