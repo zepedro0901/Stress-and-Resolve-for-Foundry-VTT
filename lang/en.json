@@ -1,0 +1,545 @@
+{
+  "SR": {
+    "Stress": "Stress",
+    "Afflictions": "Afflictions",
+    "Virtues": "Virtues",
+    "Chat": {
+      "Gain": "{name} suffers {amount} Stress ({value} / {limit}).",
+      "Loss": "{name} recovers {amount} Stress ({value} / {limit}).",
+      "ResolveTested": "{name}'s resolve is tested…",
+      "ResolveIgnored": "Rolled {result}, which is not a Virtue, so it is ignored.",
+      "BecomesVirtuous": "Virtuous: {result}!",
+      "BecomesAfflicted": "Afflicted: {result}!",
+      "ConditionEnds": "{name} is no longer {condition}.",
+      "MortalityVirtuous": "{name} faces Mortality: even virtue can't hold the heart. Heart attack! 0 HP, two failed death saves, Stress drops to 0 and the virtue ends.",
+      "HeartAttack": "{name} faces Mortality and suffers a heart attack! Dropped to 0 HP with two failed death saves.",
+      "HeartAttackRecovered": "{name} survives the heart attack. Stress falls to the Stress Limit ({limit}).",
+      "StressDie": "{name} spends a Stress Die",
+      "MadnessReminder": "{name} has been afflicted for three days or more. Per the rules they gain a random form of Indefinite Madness (DMG).",
+      "SafeRest": "{name} rests somewhere safe. Stress drops to 0.",
+      "LimitIncreased": "{name}'s Stress Limit is now {limit}.",
+      "TempAbsorbed": "{name}'s temporary HP soak {n} Stress.",
+      "ResolveTwice": "{source}: rolled {a} and {b}, kept {kept}.",
+      "Source": "Source:"
+    },
+    "Reason": {
+      "StressZero": "Stress reached 0.",
+      "StressDie": "Stress Die (short rest).",
+      "LongRest": "Long rest.",
+      "SafeRest": "Long rest in a safe place.",
+      "Manual": "Set by hand.",
+      "Hopeless": "Hopeless: +{n}.",
+      "Stalwart": "Stalwart: −{n}.",
+      "Aura": "End of {name}'s turn while {condition}.",
+      "Irrational": "{name}'s irrational outburst.",
+      "Fear": "Frightened by {enemy}.",
+      "FearUnknown": "Frightened (CR chosen by the GM).",
+      "Virtue": "{name} is {virtue}.",
+      "Abusive": "{name} berates the miss.",
+      "TempAbsorbed": "Temporary HP soaked {n} ({left} left).",
+      "Psychic": "{n} Psychic damage from {source}.",
+      "Spell": "{spell}.",
+      "Musician": "{name}'s Encouraging Song.",
+      "DarkGift": "{gift}: the gift's horror.",
+      "ZeroHP": "Dropped to 0 HP (level {n}).",
+      "CritTaken": "Critical hit from {source} ({n} damage).",
+      "CritScored": "Critical hit on {target} ({n} damage).",
+      "Unknown": "No source given (changed by {user}).",
+      "ManualBy": "Set by hand by {user}.",
+      "UnknownSource": "an unknown source",
+      "FearTargeted": "Targeted by {enemy}, whom they fear ({action}).",
+      "Lingering": "{condition} by {enemy} this round.",
+      "AllyDied": "Saw {name} die ({hd} Hit Dice).",
+      "AllyDiedLearned": "Learned of {name}'s death (half of {roll}).",
+      "KillingBlow": "Killing blow on {enemy}, whom they feared (−{n})."
+    },
+    "Notify": {
+      "NoHitDice": "No hit dice left to spend on a Stress Die.",
+      "NoGM": "A GM must be online to change Stress on a character you don't own."
+    },
+    "Condition": {
+      "paranoid": {
+        "Name": "Paranoid",
+        "Short": "Won't eat, drink potions, use equipment or accept help from allies. In combat, accepts aid only on a DC 15 CHA save. Causes 1d4 Stress to nearby allies at the end of their turn."
+      },
+      "selfish": {
+        "Name": "Selfish",
+        "Short": "Won't share food, potions or equipment; helping allies needs a DC 15 CHA save. Causes 1d4 Stress to nearby allies at the end of their turn."
+      },
+      "irrational": {
+        "Name": "Irrational",
+        "Short": "Rolls d6 each turn: 1–3 acts normally, 4–5 causes 1d6 Stress to self and allies, 6 attacks self (1d8). Causes 1d4 Stress to nearby allies at the end of their turn."
+      },
+      "fearful": {
+        "Name": "Fearful",
+        "Short": "Becomes frightened of a random enemy each turn, gaining Stress (double if the same enemy twice). Causes 1d4 Stress to nearby allies at the end of their turn."
+      },
+      "hopeless": {
+        "Name": "Hopeless",
+        "Short": "No advantage in combat, speed −10 ft, +1d4 to every Stress gain. Causes 1d4 Stress to nearby allies at the end of their turn."
+      },
+      "abusive": {
+        "Name": "Abusive",
+        "Short": "Allies who miss within sight take 1d6 Stress (disadvantage on their next roll if 6). Causes 1d4 Stress to nearby allies at the end of their turn."
+      },
+      "masochistic": {
+        "Name": "Masochistic",
+        "Short": "Refuses healing or damage reduction (DC 15 CHA in combat), disadvantage on death saves, can't Disengage, attacks of opportunity against them have advantage. Causes 1d4 Stress to nearby allies."
+      },
+      "rapturous": {
+        "Name": "Rapturous",
+        "Short": "Advantage on attacks and initiative, reroll one damage die per round, reduce damage taken by Proficiency. Attacks against them have advantage, no Disengage/Dodge/Help, disadvantage on DEX saves. Causes 1d4 Stress to nearby allies."
+      },
+      "refracted": {
+        "Name": "Refracted",
+        "Short": "Rolls on the Resolve table at the start of each turn; an Affliction result applies until the start of their next turn."
+      },
+      "powerful": {
+        "Name": "Powerful",
+        "Short": "Reroll one damage die per turn. On a d4 roll of 4 at turn start, the next attack or spell deals maximum damage. Nearby allies may reroll one damage die."
+      },
+      "courageous": {
+        "Name": "Courageous",
+        "Short": "Immune to fear; nearby allies have advantage on saves against fear. On a d4 roll of 4 at turn start, self and allies heal Stress equal to half level + Proficiency."
+      },
+      "stalwart": {
+        "Name": "Stalwart",
+        "Short": "Immune to charm; Stress gained is reduced by Proficiency. On a d4 roll of 4, recovers Stress equal to half level + Proficiency."
+      },
+      "vigorous": {
+        "Name": "Vigorous",
+        "Short": "1d12 temporary HP each turn, advantage on all saves, no Stress from afflicted allies. On a d4 roll of 4, self and allies reduce damage by Proficiency until next turn."
+      },
+      "focused": {
+        "Name": "Focused",
+        "Short": "Crits on 19–20 (or one lower if already expanded), advantage on DEX saves, +1 to ability and spell DCs. On a d4 roll of 4, allies crit on 19 until next turn."
+      }
+    },
+    "Level": {
+      "Title": "{name}: Stress Limit, level {level}",
+      "Body": "Roll your Stress Die ({die}) or take the fixed value ({fixed}). Your Wisdom modifier is added either way.",
+      "Roll": "Roll {die}",
+      "Fixed": "Take {fixed}",
+      "Flavor": "Stress Limit increase, level {level}"
+    },
+    "Rest": {
+      "StressDice": "Stress Dice",
+      "UsesHitDie": "uses a {die} hit die, {n} left",
+      "StressNow": "Stress: {value} / {limit}. Each Stress Die spends one hit die and reduces Stress by the roll + WIS.",
+      "Spend": "Spend a Stress Die",
+      "Safe": "Rested somewhere safe",
+      "SafeHint": "Outside the dungeon or other dangerous place. Clears all Stress and any affliction. Any long rest ends a virtue.",
+      "Chef": "Ate {name}'s Replenishing Meal (+1d8 per Stress Die)",
+      "ChefBonus": "{name}'s Replenishing Meal: +1d8.",
+      "Shelter": "{spell} (cast by {name}) is standing: this rest counts as safe.",
+      "Song": "Song of Rest from {name} (+1{die} per Stress Die)",
+      "SongHint": "{name} spends one Bardic Inspiration, once for the whole rest.",
+      "SongBonus": "{name}'s Song of Rest: +1{die}.",
+      "Commune": "Dark Commune (expend a Pact Magic slot)",
+      "CommuneHint": "Your Patron wakes you if danger is near; you and the party gain Stress equal to your Charisma modifier."
+    },
+    "Sheet": {
+      "Tooltip": "Resolve check at {limit} Stress, Mortality at {mortal}. Click to edit: a number sets Stress, +N or −N changes it.",
+      "TempTooltip": "{n} temporary HP protecting Stress"
+    },
+    "Config": {
+      "Title": "Stress and Resolve",
+      "Current": "Current Stress",
+      "Condition": "Affliction or virtue",
+      "None": "None",
+      "RollResolve": "Roll a Resolve check",
+      "HeartAttack": "Heart attack pending",
+      "Limit": "Stress Limit: {limit}",
+      "LimitHint": "Stress Die {die}. Level 1: {max} + WIS ({wis}). Each later level: the gain below + WIS. Empty levels use the fixed value ({fixed}).",
+      "LevelGain": "Level {level} gain",
+      "Tough": "Tough feat adds to Stress Limit",
+      "ToughHint": "Adds 2 per level to the Stress Limit instead of hit points. Choose when the feat is taken.",
+      "Signature": "Variant Resolve",
+      "SignatureHint": "Any affliction rolled becomes the signature affliction, any virtue the signature virtue. Choosing Rapturous replaces both.",
+      "SignatureAffliction": "Signature affliction",
+      "SignatureVirtue": "Signature virtue",
+      "Save": "Save",
+      "FaceMortality": "Face Mortality now (heart attack if afflicted)",
+      "TempStress": "Temporary HP protecting Stress",
+      "TempStressHint": "Soaks Stress before it is gained. Setting it removes temporary HP from Hit Points (one layer at a time).",
+      "Native": "Natively blind or deaf",
+      "NativeHint": "A character born blind or deaf takes no Stress from being Blinded or Deafened.",
+      "NativeBlind": "Natively blind",
+      "NativeDeaf": "Natively deaf"
+    },
+    "Party": {
+      "Title": "Party Stress",
+      "Empty": "No player characters yet."
+    },
+    "Settings": {
+      "chatOnChange": {
+        "Name": "Post Stress changes to chat",
+        "Hint": "Post Stress changes to chat for everyone. When off, Stress gains are still whispered to the GM with their source."
+      },
+      "variantResolve": {
+        "Name": "Variant Resolve",
+        "Hint": "Characters use their signature affliction and virtue instead of the rolled one. Set them in each character's Stress settings."
+      },
+      "safeRestDefault": {
+        "Name": "Long rests are safe by default",
+        "Hint": "Default for the \"Rested somewhere safe\" box in the long rest dialog, and for rests taken without a dialog."
+      },
+      "partyButton": {
+        "Name": "Party Stress button",
+        "Hint": "Show a Party Stress button in the Actors sidebar."
+      },
+      "tokenBar": {
+        "Name": "Token Stress bar",
+        "Hint": "A bar above character tokens. It fills to double the Stress Limit (Mortality); the white notch in the middle is the Limit (Resolve check).",
+        "Always": "Always",
+        "Hover": "When hovered or selected",
+        "Never": "Never"
+      },
+      "tokenAura": {
+        "Name": "Affliction and virtue aura on tokens",
+        "Hint": "Afflicted tokens get a pulsing red aura with thorns, virtuous tokens a golden aura with sun rays, both with the condition's name in large letters."
+      },
+      "revealAnimation": {
+        "Name": "Resolve reveal animation",
+        "Hint": "When a character becomes afflicted or virtuous, or suffers a heart attack, show a full-screen reveal for a few seconds. Applies to this device only."
+      },
+      "revealCamera": {
+        "Name": "Reveal: move the camera",
+        "Hint": "Pan to the character's token during the reveal, then return to where you were. Applies to this device only."
+      },
+      "revealVolume": {
+        "Name": "Reveal: sound volume",
+        "Hint": "0 turns the reveal sounds off. Applies to this device only."
+      },
+      "revealDuration": {
+        "Name": "Reveal: length (seconds)",
+        "Hint": "How long the reveal holds the screen."
+      },
+      "soundAffliction": {
+        "Name": "Reveal sound: affliction",
+        "Hint": "Leave empty for no sound."
+      },
+      "soundVirtue": {
+        "Name": "Reveal sound: virtue",
+        "Hint": "Leave empty for no sound."
+      },
+      "soundHeartAttack": {
+        "Name": "Reveal sound: heart attack",
+        "Hint": "Leave empty for no sound."
+      },
+      "debug": {
+        "Name": "Debug logging",
+        "Hint": "Write each Stress rules step to the browser console (F12). Useful when reporting a problem."
+      },
+      "automateEffects": {
+        "Name": "Automate afflictions and virtues",
+        "Hint": "Run each condition's effects: auras at the end of turns, virtue rolls at the start, advantage and disadvantage, rerolls and more. Turn effects run on the GM's client."
+      },
+      "nearbyRange": {
+        "Name": "\"Nearby\" range (ft)",
+        "Hint": "How close an ally must be to be affected by auras and virtue benefits."
+      },
+      "gateAid": {
+        "Name": "Refusing and withholding aid",
+        "Hint": "Paranoid and Masochistic characters must pass a DC 15 Charisma save to accept an ally's healing or help (refused outside combat); Selfish characters must pass it to help an ally. A failed save cancels the spell or item before anything is spent."
+      },
+      "fearStress": {
+        "Name": "Stress from fear",
+        "Hint": "Gaining the Frightened condition adds Stress equal to the source creature's CR. If the source is unknown, the GM is asked."
+      },
+      "turnReminders": {
+        "Name": "Turn reminders",
+        "Hint": "At the start of an afflicted or virtuous character's turn, privately remind the GM and that character's players what the condition does: what the module applies automatically, and any rules the table must apply."
+      },
+      "psychicStress": {
+        "Name": "Psychic damage adds Stress",
+        "Hint": "A character gains Stress equal to the Psychic damage they take."
+      },
+      "tempHpChoice": {
+        "Name": "Temporary HP can protect Stress",
+        "Hint": "When a character gains temporary HP, their player chooses whether it protects Hit Points or Stress. Only one layer at a time."
+      },
+      "spellRiders": {
+        "Name": "Spell and feat riders",
+        "Hint": "Stress effects for spells and feats: shelters make long rests safe, Heroes' Feast, Power Word Heal, Prayer of Healing, Greater Restoration, Beacon of Hope, Death Ward, Catnap, Contact Other Plane, Musician, Chef, Healer, epic boons and Dark Gifts."
+      },
+      "classRiders": {
+        "Name": "Class and PDF riders",
+        "Hint": "The PDF's class changes (adjusted for 2024): Rage, Bardic Inspiration, Song of Rest, Divine Intervention, Turn Undead, Second Wind, Patient Defense, Lay on Hands, Aura of Courage, Favored Enemy, Sneak Attack, Calming Spell, Pact Magic, Dark Commune, Arcane Recovery, Craftsman's Calm, Crimson Rite, plus Calm Emotions and Soothe."
+      },
+      "zeroHpStress": {
+        "Name": "Dropping to 0 HP adds Stress",
+        "Hint": "A character reduced to 0 Hit Points gains Stress equal to their level, once per combat (not when a heart attack does it)."
+      },
+      "critStress": {
+        "Name": "Critical hits change Stress",
+        "Hint": "A character hit by a critical gains Stress equal to half the damage taken; a character who scores one removes Stress equal to half the damage dealt."
+      },
+      "fearTargetStress": {
+        "Name": "Targeted by a feared creature",
+        "Hint": "A character frightened of a creature gains Stress equal to its CR each time it attacks or targets them."
+      },
+      "conditionStress": {
+        "Name": "Lingering conditions add Stress",
+        "Hint": "At the end of each of their turns in combat, a character who is Blinded, Deafened, Poisoned, Restrained or Paralyzed gains Stress equal to the CR of the creature that inflicted it."
+      },
+      "allyDeathStress": {
+        "Name": "An ally's death adds Stress",
+        "Hint": "When an ally dies, characters on the scene gain 1d8 Stress per Hit Die the ally had; the GM gets buttons for those who learn of it later (half)."
+      },
+      "killingBlowRelief": {
+        "Name": "Killing blow on a feared creature",
+        "Hint": "A character who lands the killing blow on a creature they're frightened of removes Stress equal to twice its CR."
+      }
+    },
+    "Token": {
+      "Afflicted": "Afflicted",
+      "Virtuous": "Virtuous"
+    },
+    "Reveal": {
+      "Kicker": "{name}'s resolve is tested…",
+      "Afflicted": "Afflicted",
+      "Virtuous": "Virtuous",
+      "MortalityKicker": "{name} faces Mortality…",
+      "HeartAttack": "Heart Attack",
+      "HeartAttackDetail": "0 HP · two failed death saves"
+    },
+    "Fx": {
+      "Refracted": {
+        "Title": "{name} is Refracted",
+        "Afflicted": "{result} until the start of their next turn.",
+        "Nothing": "Rolled {result}: nothing happens this turn."
+      },
+      "Aura": {
+        "Title": "{name} is {condition}",
+        "Targets": "1d4 Stress to: {names}.",
+        "None": "No allies nearby."
+      },
+      "Irrational": {
+        "Title": "{name} is Irrational",
+        "Normal": "Acts normally this turn.",
+        "Rant": "Rants and raves: {n} Stress to themself and every ally in earshot.",
+        "Self": "Turns on themself with {weapon}: {n} {type} damage, and loses the rest of the turn (no actions, no movement).",
+        "Unarmed": "their fists"
+      },
+      "Fearful": {
+        "Title": "{name} is Fearful",
+        "Text": "Frightened of {enemy} (CR {cr}) until the start of their next turn.",
+        "Again": "Frightened of {enemy} (CR {cr}) again: double Stress!"
+      },
+      "Vigorous": {
+        "TempTitle": "{name} is Vigorous",
+        "Temp": "{n} temporary hit points.",
+        "Shield": "Damage taken by {name} and allies is reduced by {n} until their next turn.",
+        "EffectName": "Vigorous ({name})"
+      },
+      "Virtue": {
+        "Title": "{name} is {virtue}",
+        "Miss": "No surge this turn."
+      },
+      "Powerful": {
+        "Max": "Their next attack or spell deals maximum damage.",
+        "Used": "{name}'s Powerful surge: maximum damage!"
+      },
+      "Courageous": {
+        "Heal": "They and nearby allies recover {n} Stress."
+      },
+      "Stalwart": {
+        "Heal": "They recover {n} Stress."
+      },
+      "Focused": {
+        "Allies": "Allies critically hit on a 19 or 20 until their next turn.",
+        "EffectName": "Focused ({name})"
+      },
+      "Abusive": {
+        "Title": "{name} berates {target}'s miss",
+        "Six": "A 6! Disadvantage on their next attack roll or saving throw.",
+        "EffectName": "Berated by {name}"
+      },
+      "Reroll": {
+        "Button": "Reroll lowest damage die ({n} left)",
+        "Done": "{name} rerolls a {die}: {old} → {now}."
+      },
+      "Aid": {
+        "RefusedOutside": "{name} is {condition} and refuses the help.",
+        "SaveFlavor": "{name} ({condition}): DC 15 Charisma save to accept",
+        "Failed": {
+          "selfish": "{name} is Selfish and won't share {item}. Nothing was spent.",
+          "paranoid": "{name} is Paranoid and refuses {item}. Nothing was spent.",
+          "masochistic": "{name} is Masochistic and refuses the healing from {item}. Nothing was spent."
+        }
+      },
+      "FearPrompt": {
+        "Title": "Frightened: which creature?",
+        "Body": "{name} is Frightened, but the source isn't known. They gain Stress equal to the creature's CR.",
+        "Creature": "Creature",
+        "CR": "Or type a CR",
+        "Optional": "optional",
+        "Apply": "Apply Stress",
+        "Skip": "No Stress"
+      },
+      "Reminder": {
+        "Title": "{name}'s turn",
+        "paranoid": "won't eat, drink or use anything an ally hands them (food, potions, equipment). In combat they can accept it with a DC 15 Charisma save.",
+        "selfish": "won't share food, potions or equipment with allies.",
+        "masochistic": "can't take the Disengage action; opportunity attacks against them have advantage.",
+        "rapturous": "can't take the Disengage, Dodge or Help actions.",
+        "courageous": "nearby allies have advantage on saving throws against fear.",
+        "irrational": "attacked themself: no further actions this turn, including movement.",
+        "ManualHeading": "Apply these yourselves",
+        "AutoHeading": "The module handles",
+        "Auto": {
+          "paranoid": "refuses an ally's healing or buffs unless they pass a DC 15 Charisma save (refused outside combat); 1d4 Stress to nearby allies at the end of the turn.",
+          "selfish": "helping an ally with healing or buffs needs a DC 15 Charisma save; 1d4 Stress to nearby allies at the end of the turn.",
+          "irrational": "d6 at the start of the turn (1–3 normal, 4–5 1d6 Stress to self and nearby allies, 6 attacks themself for 1d8); 1d4 Stress to nearby allies at the end of the turn.",
+          "fearful": "Frightened of a random enemy until their next turn, gaining Stress equal to its CR (double for the same enemy again); 1d4 Stress to nearby allies at the end of the turn.",
+          "hopeless": "no advantage on any roll in combat, speed −10 ft, +1d4 to every Stress gain; 1d4 Stress to nearby allies at the end of the turn.",
+          "abusive": "allies who miss an attack take 1d6 Stress (on a 6, disadvantage on their next attack or save); 1d4 Stress to nearby allies at the end of the turn.",
+          "masochistic": "refuses an ally's healing unless they pass a DC 15 Charisma save (refused outside combat), disadvantage on death saves; 1d4 Stress to nearby allies at the end of the turn.",
+          "rapturous": "advantage on attacks and initiative, attacks against them have advantage, disadvantage on DEX saves, damage taken −Proficiency, one damage die reroll this round; 1d4 Stress to nearby allies at the end of the turn.",
+          "refracted": "a new Resolve roll at the start of each turn; an affliction result lasts until their next turn.",
+          "powerful": "one damage die reroll this turn, and nearby allies get one for their next turn; on a d4 roll of 4, the next attack or spell deals maximum damage.",
+          "courageous": "immune to Frightened (no fear Stress); on a d4 roll of 4, they and nearby allies heal half level + Proficiency Stress.",
+          "stalwart": "immune to Charmed, Stress gained −Proficiency (minimum 1); on a d4 roll of 4, heals half level + Proficiency Stress.",
+          "vigorous": "1d12 temporary HP, advantage on all saves, no Stress from afflicted allies; on a d4 roll of 4, damage to them and allies −Proficiency until their next turn.",
+          "focused": "crits one lower, advantage on DEX saves, spell DC +1; on a d4 roll of 4, allies crit on 19 until their next turn."
+        }
+      }
+    },
+    "TempHP": {
+      "Title": "Temporary HP: {name}",
+      "Body": "<strong>{name}</strong> gains <strong>{n}</strong> temporary hit points. What do they protect?",
+      "CurrentHP": "Current layer: {n} temporary HP protecting Hit Points.",
+      "CurrentStress": "Current layer: {n} temporary HP protecting Stress.",
+      "CurrentNone": "No temporary HP right now.",
+      "ProtectHP": "Hit Points",
+      "ProtectStress": "Stress",
+      "Keep": "Keep current",
+      "Hint": "Only one layer of temporary HP at a time: choosing replaces the current one. Closing this window protects Hit Points.",
+      "Chose": {
+        "hp": "{name}'s {n} temporary HP protect their Hit Points.",
+        "stress": "{name}'s {n} temporary HP protect their Stress.",
+        "keep": "{name} keeps their current temporary HP and lets the new {n} go."
+      }
+    },
+    "Adapt": {
+      "ContactOtherPlane": {
+        "Text": "{name}'s mind reels from the contact: Stress rises to the Limit ({limit}) and they become {condition}.",
+        "Already": "{name}'s mind reels from the contact: Stress rises to at least the Limit ({limit})."
+      },
+      "NotOwner": "You don't own that character.",
+      "PickCharacter": "Select your character's token (or assign a character to your user) first.",
+      "SpendFor": "Spend a Stress Die: {name}",
+      "SpendOwn": "Spend a Stress Die (your character)",
+      "Shelter": {
+        "Cast": "{name} casts {spell}: a long rest inside counts as a safe place (Stress to 0, afflictions end)."
+      },
+      "Catnap": "{spell}: the sleepers gain the benefits of a short rest and can spend Stress Dice.",
+      "GreaterRestoration": "End {name}'s affliction ({condition}) instead of the spell's usual effect?",
+      "OnPC": {
+        "Someone": "a character",
+        "Intro": "{spell} was cast on {names}. Suggested Stress rule (apply it if you like):",
+        "befuddlement": "The target is Refracted until the spell is ended. Set it in the Stress cog and clear it when the spell ends.",
+        "dream": "While the nightmare lasts, the long rest doesn't clear Stress (untick \"Rested somewhere safe\"). The Psychic damage already adds Stress.",
+        "fractured-awareness": "The target is Refracted while the spell lasts (a Resolve roll each turn, afflictions last one turn). Set it in the Stress cog.",
+        "reality-break": "The target is Refracted while the spell lasts (a Resolve roll each turn, afflictions last one turn). Set it in the Stress cog.",
+        "vision-of-elapsing-eons": "Each failed save also adds 1d10 Stress, alongside the Exhaustion."
+      },
+      "BattleMedic": {
+        "Text": "{name} tends a wound (Battle Medic). The patient can spend a Stress Die instead of a Hit Point Die.",
+        "Bonus": "Rolled by {name}: + Proficiency ({n})."
+      },
+      "HeartAttack": {
+        "Title": "Heart attack: {name}",
+        "Ask": "{name} is about to suffer a heart attack. Use a boon to stop it?",
+        "No": "Don't use it",
+        "Saved": "{source} stops {name}'s heart attack: they drop to {hp} HP instead of 0 and Stress falls to the Limit ({limit}).",
+        "SavedVirtuous": "{source} stops {name}'s heart attack: they drop to {hp} HP instead of 0, Stress falls to 0 and the virtue ends.",
+        "Misty": "They also cast Gaseous Form (apply it on the sheet)."
+      },
+      "Bountiful": "{feat}: the Stress Die rolls its maximum.",
+      "Musician": {
+        "Ask": "Encouraging Song: up to {n} allies who hear it recover 1d4 Stress.",
+        "Play": "Play"
+      },
+      "DarkGift": {
+        "Flavor": "{gift}: a natural 1 wakes the gift",
+        "aberrant-anatomy": "{name} fails the save: Stunned until the end of their next turn.",
+        "echoing-soul": "{name} fails the save: Incapacitated until the end of their next turn.",
+        "gathered-whispers": "{name} fails the save: Deafened until the end of their next turn.",
+        "living-shadow": "{name} fails the save: Incapacitated until the start of their next turn, and the shadow acts (roll on the Shadow's Will table).",
+        "symbiotic-being": "{name} fails the save: Charmed by the symbiote for 1d12 hours (repeat the save when taking damage).",
+        "watchers": "{name} fails the save: Disadvantage on D20 Tests for 1 minute (repeat the save at the end of each turn).",
+        "WatchersParanoid": "Twice in one fight: {name}'s paranoia takes hold. They become Paranoid."
+      }
+    },
+    "Class": {
+      "Apply": "Apply",
+      "HealChoice": "{name}: heal Hit Points or Stress?",
+      "NoUses": "{name} has no uses left.",
+      "LayOnHands": {
+        "Ask": "Points from the pool to heal {name}'s Stress (up to {max}):"
+      },
+      "TurnUndead": {
+        "Title": "Turn Undead",
+        "Text": "{name} channels divinity against the undead. Each undead that fails the save heals 1d6 Stress.",
+        "Button": "Undead turned: heal Stress",
+        "Ask": "How many undead failed the save?"
+      },
+      "Bardic": {
+        "Text": "{name} inspires an ally. The recipient can spend the Bardic Inspiration ({die}) to heal Stress instead.",
+        "Button": "{name}: spend it on Stress (1{die})"
+      },
+      "Calm": {
+        "Ask": "Suppress {name}'s affliction ({condition}) while Calm Emotions lasts?",
+        "Suppressed": "Calm Emotions: {name}'s {condition} is suppressed while the spell lasts.",
+        "Returns": "Calm Emotions ends: {name} is {condition} again.",
+        "Short": "suppressed"
+      },
+      "Calming": {
+        "NoPoints": "Calming Spell needs 2 Sorcery Points.",
+        "NoTargets": "Target the allies of the spell first."
+      },
+      "ArcaneRecovery": {
+        "Ask": "How many spell slot levels did you recover?"
+      },
+      "SongOfRest": {
+        "Sung": "{name} sings through the short rest (one Bardic Inspiration spent): allies add the Bardic Inspiration die to their Stress Dice."
+      },
+      "DarkCommune": {
+        "Text": "{name} communes with their Patron through the night: they will be woken if danger is near, but everyone resting gains {n} Stress."
+      },
+      "Reason": {
+        "Rage": "Rage: −{n}.",
+        "Aura": "{name}'s Aura of Courage: −{n}.",
+        "Favored": "Hunter's Mark target (halved): −{n}.",
+        "Craftsman": "Craftsman's Calm: −{n}.",
+        "RageEnd": "Rage ends ({n}).",
+        "SecondWind": "Second Wind.",
+        "LayOnHands": "{name}'s Lay on Hands.",
+        "Pact": "Pact Magic (level {n} slot).",
+        "Patient": "Patient Defense.",
+        "Sneak": "Sneak Attack with Advantage.",
+        "Calming": "{name}'s Calming Spell.",
+        "ArcaneRecovery": "Arcane Recovery ({n} slot levels).",
+        "Crimson": "Crimson Rite.",
+        "TurnUndead": "Turn Undead ({n}).",
+        "Bardic": "{name}'s Bardic Inspiration.",
+        "DarkCommune": "{name}'s Dark Commune."
+      }
+    },
+    "Source": {
+      "AskCR": {
+        "Title": "Condition Stress",
+        "Body": "{name} is {condition}, but the module can't tell which creature caused it. Type its CR (asked once per effect), or skip."
+      },
+      "Death": {
+        "Title": "{name} has died",
+        "Text": "Every character who saw it gains 1d8 Stress per Hit Die {name} had ({hd}).",
+        "NoWitness": "No other character was there to see it.",
+        "Absent": "These characters weren't there. Click when each of them learns of {name}'s death (half the Stress):",
+        "Learns": "{name} learns of it"
+      }
+    }
+  }
+}

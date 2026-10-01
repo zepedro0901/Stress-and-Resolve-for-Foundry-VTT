@@ -1,0 +1,545 @@
+{
+  "SR": {
+    "Stress": "Stress",
+    "Afflictions": "Aflições",
+    "Virtues": "Virtudes",
+    "Chat": {
+      "Gain": "{name} sofre {amount} de Stress ({value} / {limit}).",
+      "Loss": "{name} recupera {amount} de Stress ({value} / {limit}).",
+      "ResolveTested": "A determinação de {name} é posta à prova…",
+      "ResolveIgnored": "Saiu {result}, que não é uma Virtude, por isso é ignorado.",
+      "BecomesVirtuous": "Virtuoso: {result}!",
+      "BecomesAfflicted": "Aflito: {result}!",
+      "ConditionEnds": "{name} já não está {condition}.",
+      "MortalityVirtuous": "{name} enfrenta a Mortalidade: nem a virtude aguenta o coração. Ataque cardíaco! 0 PV, duas falhas contra a morte, o Stress desce para 0 e a virtude termina.",
+      "HeartAttack": "{name} enfrenta a Mortalidade e sofre um ataque cardíaco! Cai para 0 PV com duas falhas em testes contra a morte.",
+      "HeartAttackRecovered": "{name} sobrevive ao ataque cardíaco. O Stress desce até ao Limite de Stress ({limit}).",
+      "StressDie": "{name} gasta um Dado de Stress",
+      "MadnessReminder": "{name} está aflito há três dias ou mais. Pelas regras, ganha uma forma aleatória de Loucura Indefinida (Guia do Mestre).",
+      "SafeRest": "{name} descansa num local seguro. O Stress desce para 0.",
+      "LimitIncreased": "O Limite de Stress de {name} é agora {limit}.",
+      "TempAbsorbed": "Os PV temporários de {name} absorvem {n} de Stress.",
+      "ResolveTwice": "{source}: saiu {a} e {b}, fica {kept}.",
+      "Source": "Origem:"
+    },
+    "Reason": {
+      "StressZero": "O Stress chegou a 0.",
+      "StressDie": "Dado de Stress (descanso curto).",
+      "LongRest": "Descanso longo.",
+      "SafeRest": "Descanso longo num local seguro.",
+      "Manual": "Definido manualmente.",
+      "Hopeless": "Desesperançado: +{n}.",
+      "Stalwart": "Inabalável: −{n}.",
+      "Aura": "Fim do turno de {name} enquanto {condition}.",
+      "Irrational": "Explosão irracional de {name}.",
+      "Fear": "Amedrontado por {enemy}.",
+      "FearUnknown": "Amedrontado (ND escolhido pelo Mestre).",
+      "Virtue": "{name} está {virtue}.",
+      "Abusive": "{name} troça da falha.",
+      "TempAbsorbed": "PV temporários absorveram {n} (restam {left}).",
+      "Psychic": "{n} de dano psíquico de {source}.",
+      "Spell": "{spell}.",
+      "Musician": "Canção Encorajadora de {name}.",
+      "DarkGift": "{gift}: o horror do dom.",
+      "ZeroHP": "Caiu para 0 PV (nível {n}).",
+      "CritTaken": "Golpe crítico de {source} ({n} de dano).",
+      "CritScored": "Golpe crítico em {target} ({n} de dano).",
+      "Unknown": "Sem origem indicada (alterado por {user}).",
+      "ManualBy": "Definido manualmente por {user}.",
+      "UnknownSource": "uma origem desconhecida",
+      "FearTargeted": "Alvo de {enemy}, que teme ({action}).",
+      "Lingering": "{condition} por {enemy} nesta ronda.",
+      "AllyDied": "Viu {name} morrer ({hd} Dados de Vida).",
+      "AllyDiedLearned": "Soube da morte de {name} (metade de {roll}).",
+      "KillingBlow": "Golpe final em {enemy}, que temia (−{n})."
+    },
+    "Notify": {
+      "NoHitDice": "Não há Dados de Vida disponíveis para gastar num Dado de Stress.",
+      "NoGM": "É preciso um Mestre ligado para alterar o Stress de uma personagem que não é sua."
+    },
+    "Condition": {
+      "paranoid": {
+        "Name": "Paranoico",
+        "Short": "Não come, não bebe poções, não usa equipamento nem aceita ajuda dos aliados. Em combate, só aceita ajuda com um teste de salvaguarda de CAR CD 15. Causa 1d4 de Stress aos aliados próximos no fim do seu turno."
+      },
+      "selfish": {
+        "Name": "Egoísta",
+        "Short": "Não partilha comida, poções nem equipamento; ajudar aliados exige um teste de salvaguarda de CAR CD 15. Causa 1d4 de Stress aos aliados próximos no fim do seu turno."
+      },
+      "irrational": {
+        "Name": "Irracional",
+        "Short": "Lança 1d6 em cada turno: 1–3 age normalmente, 4–5 causa 1d6 de Stress a si e aos aliados, 6 ataca-se a si próprio (1d8). Causa 1d4 de Stress aos aliados próximos no fim do seu turno."
+      },
+      "fearful": {
+        "Name": "Medroso",
+        "Short": "Fica amedrontado por um inimigo aleatório em cada turno e ganha Stress (a dobrar se for o mesmo inimigo duas vezes). Causa 1d4 de Stress aos aliados próximos no fim do seu turno."
+      },
+      "hopeless": {
+        "Name": "Desesperançado",
+        "Short": "Sem vantagem em combate, deslocamento −3 m (10 pés), +1d4 em cada ganho de Stress. Causa 1d4 de Stress aos aliados próximos no fim do seu turno."
+      },
+      "abusive": {
+        "Name": "Abusivo",
+        "Short": "Aliados à vista que falhem um ataque sofrem 1d6 de Stress (desvantagem na jogada seguinte se sair 6). Causa 1d4 de Stress aos aliados próximos no fim do seu turno."
+      },
+      "masochistic": {
+        "Name": "Masoquista",
+        "Short": "Recusa cura e redução de dano (CAR CD 15 em combate), desvantagem nos testes contra a morte, não pode Desengajar e os ataques de oportunidade contra si têm vantagem. Causa 1d4 de Stress aos aliados próximos."
+      },
+      "rapturous": {
+        "Name": "Arrebatado",
+        "Short": "Vantagem em ataques e iniciativa, repete um dado de dano por ronda, reduz o dano sofrido pela Proficiência. Ataques contra si têm vantagem, sem Desengajar/Esquivar/Ajudar, desvantagem em salvaguardas de DES. Causa 1d4 de Stress aos aliados próximos."
+      },
+      "refracted": {
+        "Name": "Refratado",
+        "Short": "Lança na tabela de Determinação no início de cada turno; uma Aflição aplica-se até ao início do turno seguinte."
+      },
+      "powerful": {
+        "Name": "Poderoso",
+        "Short": "Repete um dado de dano por turno. Com 4 num d4 no início do turno, o próximo ataque ou magia causa dano máximo. Os aliados próximos podem repetir um dado de dano."
+      },
+      "courageous": {
+        "Name": "Corajoso",
+        "Short": "Imune ao medo; os aliados próximos têm vantagem em salvaguardas contra o medo. Com 4 num d4 no início do turno, ele e os aliados recuperam Stress igual a metade do nível + Proficiência."
+      },
+      "stalwart": {
+        "Name": "Inabalável",
+        "Short": "Imune a encantamento; o Stress sofrido é reduzido pela Proficiência. Com 4 num d4, recupera Stress igual a metade do nível + Proficiência."
+      },
+      "vigorous": {
+        "Name": "Vigoroso",
+        "Short": "1d12 PV temporários em cada turno, vantagem em todas as salvaguardas, não sofre Stress de aliados aflitos. Com 4 num d4, ele e os aliados reduzem o dano pela Proficiência até ao turno seguinte."
+      },
+      "focused": {
+        "Name": "Focado",
+        "Short": "Crítico com 19–20 (ou menos um se já tiver alcance alargado), vantagem em salvaguardas de DES, +1 nas CD de capacidades e magias. Com 4 num d4, os aliados fazem crítico com 19 até ao turno seguinte."
+      }
+    },
+    "Level": {
+      "Title": "{name}: Limite de Stress, nível {level}",
+      "Body": "Lance o Dado de Stress ({die}) ou fique com o valor fixo ({fixed}). O modificador de Sabedoria é somado em ambos os casos.",
+      "Roll": "Lançar {die}",
+      "Fixed": "Ficar com {fixed}",
+      "Flavor": "Aumento do Limite de Stress, nível {level}"
+    },
+    "Rest": {
+      "StressDice": "Dados de Stress",
+      "UsesHitDie": "usa um Dado de Vida {die}, restam {n}",
+      "StressNow": "Stress: {value} / {limit}. Cada Dado de Stress gasta um Dado de Vida e reduz o Stress pelo resultado + SAB.",
+      "Spend": "Gastar um Dado de Stress",
+      "Safe": "Descansou num local seguro",
+      "SafeHint": "Fora da masmorra ou de outro local perigoso. Elimina todo o Stress e qualquer aflição. Qualquer descanso longo termina uma virtude.",
+      "Chef": "Comeu a Refeição Revigorante de {name} (+1d8 por Dado de Stress)",
+      "ChefBonus": "Refeição Revigorante de {name}: +1d8.",
+      "Shelter": "{spell} (lançado por {name}) está ativo: este descanso conta como seguro.",
+      "Song": "Canção de Descanso de {name} (+1{die} por Dado de Stress)",
+      "SongHint": "{name} gasta uma Inspiração Bárdica, uma vez para todo o descanso.",
+      "SongBonus": "Canção de Descanso de {name}: +1{die}.",
+      "Commune": "Comunhão Sombria (gastar um espaço de Magia de Pacto)",
+      "CommuneHint": "O teu Patrono acorda-te se houver perigo; tu e o grupo ganham Stress igual ao teu modificador de Carisma."
+    },
+    "Sheet": {
+      "Tooltip": "Teste de Determinação com {limit} de Stress, Mortalidade com {mortal}. Clique para editar: um número define o Stress, +N ou −N altera-o.",
+      "TempTooltip": "{n} PV temporários a proteger o Stress"
+    },
+    "Config": {
+      "Title": "Stress e Determinação",
+      "Current": "Stress atual",
+      "Condition": "Aflição ou virtude",
+      "None": "Nenhuma",
+      "RollResolve": "Fazer um teste de Determinação",
+      "HeartAttack": "Ataque cardíaco pendente",
+      "Limit": "Limite de Stress: {limit}",
+      "LimitHint": "Dado de Stress {die}. Nível 1: {max} + SAB ({wis}). Cada nível seguinte: o ganho abaixo + SAB. Níveis vazios usam o valor fixo ({fixed}).",
+      "LevelGain": "Ganho no nível {level}",
+      "Tough": "O talento Robusto soma ao Limite de Stress",
+      "ToughHint": "Soma 2 por nível ao Limite de Stress em vez dos pontos de vida. Escolhe-se quando o talento é obtido.",
+      "Signature": "Determinação Variante",
+      "SignatureHint": "Qualquer aflição obtida passa a ser a aflição de assinatura e qualquer virtude a virtude de assinatura. Escolher Arrebatado substitui ambas.",
+      "SignatureAffliction": "Aflição de assinatura",
+      "SignatureVirtue": "Virtude de assinatura",
+      "Save": "Guardar",
+      "FaceMortality": "Enfrentar a Mortalidade agora (ataque cardíaco se aflito)",
+      "TempStress": "PV temporários a proteger o Stress",
+      "TempStressHint": "Absorvem o Stress antes de ser ganho. Defini-los retira os PV temporários dos Pontos de Vida (uma camada de cada vez).",
+      "Native": "Cego ou surdo de nascença",
+      "NativeHint": "Uma personagem cega ou surda de nascença não ganha Stress por estar Cega ou Surda.",
+      "NativeBlind": "Cego de nascença",
+      "NativeDeaf": "Surdo de nascença"
+    },
+    "Party": {
+      "Title": "Stress do Grupo",
+      "Empty": "Ainda não há personagens de jogadores."
+    },
+    "Settings": {
+      "chatOnChange": {
+        "Name": "Publicar alterações de Stress no chat",
+        "Hint": "Publica as alterações de Stress no chat para todos. Desligado, os ganhos de Stress continuam a ser sussurrados ao Mestre com a sua origem."
+      },
+      "variantResolve": {
+        "Name": "Determinação Variante",
+        "Hint": "As personagens usam a sua aflição e virtude de assinatura em vez da obtida no dado. Defina-as nas definições de Stress de cada personagem."
+      },
+      "safeRestDefault": {
+        "Name": "Descansos longos seguros por predefinição",
+        "Hint": "Valor predefinido da caixa \"Descansou num local seguro\" no diálogo de descanso longo, e para descansos feitos sem diálogo."
+      },
+      "partyButton": {
+        "Name": "Botão Stress do Grupo",
+        "Hint": "Mostrar um botão Stress do Grupo na barra lateral de Atores."
+      },
+      "tokenBar": {
+        "Name": "Barra de Stress no token",
+        "Hint": "Uma barra por cima dos tokens das personagens. Enche até ao dobro do Limite de Stress (Mortalidade); o entalhe branco a meio é o Limite (teste de Determinação).",
+        "Always": "Sempre",
+        "Hover": "Ao passar o rato ou selecionar",
+        "Never": "Nunca"
+      },
+      "tokenAura": {
+        "Name": "Aura de aflição e virtude nos tokens",
+        "Hint": "Tokens aflitos ganham uma aura vermelha pulsante com espinhos, tokens virtuosos uma aura dourada com raios de sol, ambos com o nome da condição em letras grandes."
+      },
+      "revealAnimation": {
+        "Name": "Animação de revelação da Determinação",
+        "Hint": "Quando uma personagem fica aflita ou virtuosa, ou sofre um ataque cardíaco, mostra uma revelação em ecrã inteiro durante alguns segundos. Aplica-se apenas a este dispositivo."
+      },
+      "revealCamera": {
+        "Name": "Revelação: mover a câmara",
+        "Hint": "Centra a câmara no token da personagem durante a revelação e depois regressa à posição anterior. Aplica-se apenas a este dispositivo."
+      },
+      "revealVolume": {
+        "Name": "Revelação: volume do som",
+        "Hint": "0 desliga os sons da revelação. Aplica-se apenas a este dispositivo."
+      },
+      "revealDuration": {
+        "Name": "Revelação: duração (segundos)",
+        "Hint": "Quanto tempo a revelação ocupa o ecrã."
+      },
+      "soundAffliction": {
+        "Name": "Som da revelação: aflição",
+        "Hint": "Deixe vazio para não haver som."
+      },
+      "soundVirtue": {
+        "Name": "Som da revelação: virtude",
+        "Hint": "Deixe vazio para não haver som."
+      },
+      "soundHeartAttack": {
+        "Name": "Som da revelação: ataque cardíaco",
+        "Hint": "Deixe vazio para não haver som."
+      },
+      "debug": {
+        "Name": "Registo de depuração",
+        "Hint": "Escreve cada passo das regras de Stress na consola do navegador (F12). Útil para reportar um problema."
+      },
+      "automateEffects": {
+        "Name": "Automatizar aflições e virtudes",
+        "Hint": "Executa os efeitos de cada condição: auras no fim dos turnos, jogadas de virtude no início, vantagem e desvantagem, repetições de dados e mais. Os efeitos de turno correm no cliente do Mestre."
+      },
+      "nearbyRange": {
+        "Name": "Alcance \"próximo\" (pés)",
+        "Hint": "A que distância um aliado tem de estar para ser afetado por auras e benefícios de virtudes."
+      },
+      "gateAid": {
+        "Name": "Recusar e negar ajuda",
+        "Hint": "Personagens Paranoicas e Masoquistas têm de passar numa salvaguarda de Carisma CD 15 para aceitar cura ou ajuda de um aliado (recusada fora de combate); personagens Egoístas têm de passar nela para ajudar um aliado. Uma falha cancela a magia ou o objeto antes de algo ser gasto."
+      },
+      "fearStress": {
+        "Name": "Stress por medo",
+        "Hint": "Ganhar a condição Amedrontado soma Stress igual ao ND da criatura de origem. Se a origem for desconhecida, o Mestre é questionado."
+      },
+      "turnReminders": {
+        "Name": "Lembretes de turno",
+        "Hint": "No início do turno de uma personagem aflita ou virtuosa, lembra em privado o Mestre e os jogadores dessa personagem do que a condição faz: o que o módulo aplica automaticamente e as regras que a mesa tem de aplicar."
+      },
+      "psychicStress": {
+        "Name": "Dano psíquico adiciona Stress",
+        "Hint": "Uma personagem ganha Stress igual ao dano psíquico que sofre."
+      },
+      "tempHpChoice": {
+        "Name": "PV temporários podem proteger o Stress",
+        "Hint": "Quando uma personagem ganha PV temporários, o jogador escolhe se protegem os Pontos de Vida ou o Stress. Só uma camada de cada vez."
+      },
+      "spellRiders": {
+        "Name": "Efeitos de feitiços e talentos",
+        "Hint": "Efeitos de Stress para feitiços e talentos: abrigos tornam os descansos longos seguros, Banquete dos Heróis, Palavra de Poder Curar, Oração de Cura, Restauração Maior, Farol de Esperança, Proteção contra a Morte, Sesta, Contactar Outro Plano, Músico, Cozinheiro, Curandeiro, dádivas épicas e Dons Sombrios."
+      },
+      "classRiders": {
+        "Name": "Efeitos de classe do PDF",
+        "Hint": "As alterações de classe do PDF (ajustadas a 2024): Fúria, Inspiração Bárdica, Canção de Descanso, Intervenção Divina, Expulsar Mortos-Vivos, Segundo Fôlego, Defesa Paciente, Imposição de Mãos, Aura de Coragem, Inimigo Favorito, Ataque Furtivo, Feitiço Calmante, Magia de Pacto, Comunhão Sombria, Recuperação Arcana, Calma do Artesão, Rito Carmesim, e ainda Acalmar Emoções e Acalmar (Soothe)."
+      },
+      "zeroHpStress": {
+        "Name": "Cair para 0 PV adiciona Stress",
+        "Hint": "Uma personagem reduzida a 0 Pontos de Vida ganha Stress igual ao seu nível, uma vez por combate (exceto quando é causado por um ataque cardíaco)."
+      },
+      "critStress": {
+        "Name": "Golpes críticos alteram o Stress",
+        "Hint": "Uma personagem atingida por um crítico ganha Stress igual a metade do dano sofrido; uma personagem que acerta um crítico remove Stress igual a metade do dano causado."
+      },
+      "fearTargetStress": {
+        "Name": "Alvo de uma criatura temida",
+        "Hint": "Uma personagem amedrontada por uma criatura ganha Stress igual ao ND dela sempre que a ataca ou a escolhe como alvo."
+      },
+      "conditionStress": {
+        "Name": "Condições persistentes adicionam Stress",
+        "Hint": "No fim de cada turno em combate, uma personagem Cega, Surda, Envenenada, Imobilizada ou Paralisada ganha Stress igual ao ND da criatura que causou a condição."
+      },
+      "allyDeathStress": {
+        "Name": "A morte de um aliado adiciona Stress",
+        "Hint": "Quando um aliado morre, as personagens na cena ganham 1d8 de Stress por Dado de Vida do aliado; o Mestre recebe botões para quem souber mais tarde (metade)."
+      },
+      "killingBlowRelief": {
+        "Name": "Golpe final numa criatura temida",
+        "Hint": "Uma personagem que dá o golpe final numa criatura que teme remove Stress igual ao dobro do ND dela."
+      }
+    },
+    "Token": {
+      "Afflicted": "Aflito",
+      "Virtuous": "Virtuoso"
+    },
+    "Reveal": {
+      "Kicker": "A determinação de {name} é posta à prova…",
+      "Afflicted": "Aflito",
+      "Virtuous": "Virtuoso",
+      "MortalityKicker": "{name} enfrenta a Mortalidade…",
+      "HeartAttack": "Ataque Cardíaco",
+      "HeartAttackDetail": "0 PV · duas falhas contra a morte"
+    },
+    "Fx": {
+      "Refracted": {
+        "Title": "{name} está Refratado",
+        "Afflicted": "{result} até ao início do seu próximo turno.",
+        "Nothing": "Saiu {result}: nada acontece neste turno."
+      },
+      "Aura": {
+        "Title": "{name} está {condition}",
+        "Targets": "1d4 de Stress para: {names}.",
+        "None": "Nenhum aliado por perto."
+      },
+      "Irrational": {
+        "Title": "{name} está Irracional",
+        "Normal": "Age normalmente neste turno.",
+        "Rant": "Grita e desvaria: {n} de Stress para si e para todos os aliados que o ouçam.",
+        "Self": "Ataca-se a si próprio com {weapon}: {n} de dano {type}, e perde o resto do turno (sem ações nem movimento).",
+        "Unarmed": "os punhos"
+      },
+      "Fearful": {
+        "Title": "{name} está Medroso",
+        "Text": "Amedrontado por {enemy} (ND {cr}) até ao início do seu próximo turno.",
+        "Again": "Amedrontado por {enemy} (ND {cr}) outra vez: Stress a dobrar!"
+      },
+      "Vigorous": {
+        "TempTitle": "{name} está Vigoroso",
+        "Temp": "{n} pontos de vida temporários.",
+        "Shield": "O dano sofrido por {name} e pelos aliados é reduzido em {n} até ao seu próximo turno.",
+        "EffectName": "Vigoroso ({name})"
+      },
+      "Virtue": {
+        "Title": "{name} está {virtue}",
+        "Miss": "Sem ímpeto neste turno."
+      },
+      "Powerful": {
+        "Max": "O próximo ataque ou magia causa dano máximo.",
+        "Used": "Ímpeto Poderoso de {name}: dano máximo!"
+      },
+      "Courageous": {
+        "Heal": "Ele e os aliados próximos recuperam {n} de Stress."
+      },
+      "Stalwart": {
+        "Heal": "Recupera {n} de Stress."
+      },
+      "Focused": {
+        "Allies": "Os aliados fazem crítico com 19 ou 20 até ao seu próximo turno.",
+        "EffectName": "Focado ({name})"
+      },
+      "Abusive": {
+        "Title": "{name} troça da falha de {target}",
+        "Six": "Um 6! Desvantagem na próxima jogada de ataque ou salvaguarda.",
+        "EffectName": "Humilhado por {name}"
+      },
+      "Reroll": {
+        "Button": "Repetir o dado de dano mais baixo (restam {n})",
+        "Done": "{name} repete um {die}: {old} → {now}."
+      },
+      "Aid": {
+        "RefusedOutside": "{name} está {condition} e recusa a ajuda.",
+        "SaveFlavor": "{name} ({condition}): salvaguarda de Carisma CD 15 para aceitar",
+        "Failed": {
+          "selfish": "{name} está Egoísta e não partilha {item}. Nada foi gasto.",
+          "paranoid": "{name} está Paranoico e recusa {item}. Nada foi gasto.",
+          "masochistic": "{name} está Masoquista e recusa a cura de {item}. Nada foi gasto."
+        }
+      },
+      "FearPrompt": {
+        "Title": "Amedrontado: por que criatura?",
+        "Body": "{name} está Amedrontado, mas a origem é desconhecida. Ganha Stress igual ao ND da criatura.",
+        "Creature": "Criatura",
+        "CR": "Ou escreva um ND",
+        "Optional": "opcional",
+        "Apply": "Aplicar Stress",
+        "Skip": "Sem Stress"
+      },
+      "Reminder": {
+        "Title": "Turno de {name}",
+        "paranoid": "não come, não bebe nem usa nada que um aliado lhe dê (comida, poções, equipamento). Em combate pode aceitar com uma salvaguarda de Carisma CD 15.",
+        "selfish": "não partilha comida, poções nem equipamento com os aliados.",
+        "masochistic": "não pode usar a ação Desengajar; os ataques de oportunidade contra si têm vantagem.",
+        "rapturous": "não pode usar as ações Desengajar, Esquivar nem Ajudar.",
+        "courageous": "os aliados próximos têm vantagem em salvaguardas contra o medo.",
+        "irrational": "atacou-se a si próprio: sem mais ações neste turno, incluindo movimento.",
+        "ManualHeading": "Apliquem isto à mesa",
+        "AutoHeading": "O módulo trata de",
+        "Auto": {
+          "paranoid": "recusa cura ou ajuda de um aliado a menos que passe numa salvaguarda de Carisma CD 15 (recusada fora de combate); 1d4 de Stress aos aliados próximos no fim do turno.",
+          "selfish": "ajudar um aliado com cura ou ajuda exige uma salvaguarda de Carisma CD 15; 1d4 de Stress aos aliados próximos no fim do turno.",
+          "irrational": "1d6 no início do turno (1–3 normal, 4–5 1d6 de Stress a si e aos aliados próximos, 6 ataca-se a si próprio com 1d8); 1d4 de Stress aos aliados próximos no fim do turno.",
+          "fearful": "Amedrontado por um inimigo aleatório até ao próximo turno, ganhando Stress igual ao seu ND (a dobrar se for o mesmo inimigo outra vez); 1d4 de Stress aos aliados próximos no fim do turno.",
+          "hopeless": "sem vantagem em nenhuma jogada em combate, deslocamento −10 pés, +1d4 em cada ganho de Stress; 1d4 de Stress aos aliados próximos no fim do turno.",
+          "abusive": "aliados que falhem um ataque sofrem 1d6 de Stress (com 6, desvantagem no próximo ataque ou salvaguarda); 1d4 de Stress aos aliados próximos no fim do turno.",
+          "masochistic": "recusa a cura de um aliado a menos que passe numa salvaguarda de Carisma CD 15 (recusada fora de combate), desvantagem nos testes contra a morte; 1d4 de Stress aos aliados próximos no fim do turno.",
+          "rapturous": "vantagem em ataques e iniciativa, ataques contra si têm vantagem, desvantagem em salvaguardas de DES, dano sofrido −Proficiência, uma repetição de dado de dano nesta ronda; 1d4 de Stress aos aliados próximos no fim do turno.",
+          "refracted": "nova jogada de Determinação no início de cada turno; uma aflição dura até ao seu próximo turno.",
+          "powerful": "uma repetição de dado de dano neste turno, e os aliados próximos ganham uma para o próximo turno; com 4 num d4, o próximo ataque ou magia causa dano máximo.",
+          "courageous": "imune a Amedrontado (sem Stress por medo); com 4 num d4, ele e os aliados próximos recuperam metade do nível + Proficiência de Stress.",
+          "stalwart": "imune a Enfeitiçado, Stress sofrido −Proficiência (mínimo 1); com 4 num d4, recupera metade do nível + Proficiência de Stress.",
+          "vigorous": "1d12 PV temporários, vantagem em todas as salvaguardas, sem Stress de aliados aflitos; com 4 num d4, dano a si e aos aliados −Proficiência até ao próximo turno.",
+          "focused": "crítico um valor abaixo, vantagem em salvaguardas de DES, CD das magias +1; com 4 num d4, os aliados fazem crítico com 19 até ao próximo turno."
+        }
+      }
+    },
+    "TempHP": {
+      "Title": "PV temporários: {name}",
+      "Body": "<strong>{name}</strong> ganha <strong>{n}</strong> pontos de vida temporários. O que protegem?",
+      "CurrentHP": "Camada atual: {n} PV temporários a proteger os Pontos de Vida.",
+      "CurrentStress": "Camada atual: {n} PV temporários a proteger o Stress.",
+      "CurrentNone": "Sem PV temporários neste momento.",
+      "ProtectHP": "Pontos de Vida",
+      "ProtectStress": "Stress",
+      "Keep": "Manter os atuais",
+      "Hint": "Só uma camada de PV temporários de cada vez: escolher substitui a atual. Fechar esta janela protege os Pontos de Vida.",
+      "Chose": {
+        "hp": "Os {n} PV temporários de {name} protegem os Pontos de Vida.",
+        "stress": "Os {n} PV temporários de {name} protegem o Stress.",
+        "keep": "{name} mantém os PV temporários atuais e abdica dos novos {n}."
+      }
+    },
+    "Adapt": {
+      "ContactOtherPlane": {
+        "Text": "A mente de {name} vacila com o contacto: o Stress sobe até ao Limite ({limit}) e fica {condition}.",
+        "Already": "A mente de {name} vacila com o contacto: o Stress sobe pelo menos até ao Limite ({limit})."
+      },
+      "NotOwner": "Não és dono dessa personagem.",
+      "PickCharacter": "Seleciona primeiro o token da tua personagem (ou atribui uma personagem ao teu utilizador).",
+      "SpendFor": "Gastar um Dado de Stress: {name}",
+      "SpendOwn": "Gastar um Dado de Stress (a tua personagem)",
+      "Shelter": {
+        "Cast": "{name} lança {spell}: um descanso longo lá dentro conta como local seguro (Stress a 0, as aflições terminam)."
+      },
+      "Catnap": "{spell}: quem dorme recebe os benefícios de um descanso curto e pode gastar Dados de Stress.",
+      "GreaterRestoration": "Terminar a aflição de {name} ({condition}) em vez do efeito habitual do feitiço?",
+      "OnPC": {
+        "Someone": "uma personagem",
+        "Intro": "{spell} foi lançado sobre {names}. Regra de Stress sugerida (aplica-a se quiseres):",
+        "befuddlement": "O alvo fica Refratado até o feitiço terminar. Define-o na engrenagem de Stress e retira-o quando o feitiço acabar.",
+        "dream": "Enquanto o pesadelo durar, o descanso longo não limpa o Stress (desmarca \"Descansou num local seguro\"). O dano psíquico já adiciona Stress.",
+        "fractured-awareness": "O alvo fica Refratado enquanto o feitiço durar (um teste de Determinação por turno, as aflições duram um turno). Define-o na engrenagem de Stress.",
+        "reality-break": "O alvo fica Refratado enquanto o feitiço durar (um teste de Determinação por turno, as aflições duram um turno). Define-o na engrenagem de Stress.",
+        "vision-of-elapsing-eons": "Cada salvaguarda falhada também adiciona 1d10 de Stress, além da Exaustão."
+      },
+      "BattleMedic": {
+        "Text": "{name} trata uma ferida (Médico de Batalha). O paciente pode gastar um Dado de Stress em vez de um Dado de Pontos de Vida.",
+        "Bonus": "Lançado por {name}: + Proficiência ({n})."
+      },
+      "HeartAttack": {
+        "Title": "Ataque cardíaco: {name}",
+        "Ask": "{name} está prestes a sofrer um ataque cardíaco. Usar uma dádiva para o impedir?",
+        "No": "Não usar",
+        "Saved": "{source} impede o ataque cardíaco de {name}: fica com {hp} PV em vez de 0 e o Stress desce até ao Limite ({limit}).",
+        "SavedVirtuous": "{source} impede o ataque cardíaco de {name}: fica com {hp} PV em vez de 0, o Stress desce a 0 e a virtude termina.",
+        "Misty": "Também lança Forma Gasosa (aplica-a na ficha)."
+      },
+      "Bountiful": "{feat}: o Dado de Stress conta o valor máximo.",
+      "Musician": {
+        "Ask": "Canção Encorajadora: até {n} aliados que a ouçam recuperam 1d4 de Stress.",
+        "Play": "Tocar"
+      },
+      "DarkGift": {
+        "Flavor": "{gift}: um 1 natural desperta o dom",
+        "aberrant-anatomy": "{name} falha a salvaguarda: Atordoado até ao fim do seu próximo turno.",
+        "echoing-soul": "{name} falha a salvaguarda: Incapacitado até ao fim do seu próximo turno.",
+        "gathered-whispers": "{name} falha a salvaguarda: Ensurdecido até ao fim do seu próximo turno.",
+        "living-shadow": "{name} falha a salvaguarda: Incapacitado até ao início do seu próximo turno, e a sombra age (rola na tabela Vontade da Sombra).",
+        "symbiotic-being": "{name} falha a salvaguarda: Enfeitiçado pelo simbionte durante 1d12 horas (repete a salvaguarda ao sofrer dano).",
+        "watchers": "{name} falha a salvaguarda: Desvantagem nos Testes D20 durante 1 minuto (repete a salvaguarda no fim de cada turno).",
+        "WatchersParanoid": "Duas vezes no mesmo combate: a paranoia de {name} toma conta. Fica Paranoico."
+      }
+    },
+    "Class": {
+      "Apply": "Aplicar",
+      "HealChoice": "{name}: curar Pontos de Vida ou Stress?",
+      "NoUses": "{name} não tem utilizações restantes.",
+      "LayOnHands": {
+        "Ask": "Pontos da reserva para curar o Stress de {name} (até {max}):"
+      },
+      "TurnUndead": {
+        "Title": "Expulsar Mortos-Vivos",
+        "Text": "{name} canaliza a divindade contra os mortos-vivos. Cada morto-vivo que falhe a salvaguarda cura 1d6 de Stress.",
+        "Button": "Mortos-vivos expulsos: curar Stress",
+        "Ask": "Quantos mortos-vivos falharam a salvaguarda?"
+      },
+      "Bardic": {
+        "Text": "{name} inspira um aliado. Quem a recebe pode gastar a Inspiração Bárdica ({die}) para curar Stress.",
+        "Button": "{name}: gastar no Stress (1{die})"
+      },
+      "Calm": {
+        "Ask": "Suprimir a aflição de {name} ({condition}) enquanto Acalmar Emoções durar?",
+        "Suppressed": "Acalmar Emoções: {condition} de {name} fica suprimido enquanto o feitiço durar.",
+        "Returns": "Acalmar Emoções termina: {name} volta a estar {condition}.",
+        "Short": "suprimida"
+      },
+      "Calming": {
+        "NoPoints": "Feitiço Calmante precisa de 2 Pontos de Feitiçaria.",
+        "NoTargets": "Escolhe primeiro os aliados alvo do feitiço."
+      },
+      "ArcaneRecovery": {
+        "Ask": "Quantos níveis de espaços de feitiço recuperaste?"
+      },
+      "SongOfRest": {
+        "Sung": "{name} canta durante o descanso curto (gasta uma Inspiração Bárdica): os aliados somam o dado de Inspiração Bárdica aos Dados de Stress."
+      },
+      "DarkCommune": {
+        "Text": "{name} comunga com o seu Patrono durante a noite: será acordado se houver perigo, mas todos os que descansam ganham {n} de Stress."
+      },
+      "Reason": {
+        "Rage": "Fúria: −{n}.",
+        "Aura": "Aura de Coragem de {name}: −{n}.",
+        "Favored": "Alvo da Marca do Caçador (metade): −{n}.",
+        "Craftsman": "Calma do Artesão: −{n}.",
+        "RageEnd": "A Fúria termina ({n}).",
+        "SecondWind": "Segundo Fôlego.",
+        "LayOnHands": "Imposição de Mãos de {name}.",
+        "Pact": "Magia de Pacto (espaço de nível {n}).",
+        "Patient": "Defesa Paciente.",
+        "Sneak": "Ataque Furtivo com Vantagem.",
+        "Calming": "Feitiço Calmante de {name}.",
+        "ArcaneRecovery": "Recuperação Arcana ({n} níveis).",
+        "Crimson": "Rito Carmesim.",
+        "TurnUndead": "Expulsar Mortos-Vivos ({n}).",
+        "Bardic": "Inspiração Bárdica de {name}.",
+        "DarkCommune": "Comunhão Sombria de {name}."
+      }
+    },
+    "Source": {
+      "AskCR": {
+        "Title": "Stress de condição",
+        "Body": "{name} está {condition}, mas o módulo não sabe que criatura o causou. Escreve o ND (pergunta uma vez por efeito), ou ignora."
+      },
+      "Death": {
+        "Title": "{name} morreu",
+        "Text": "Cada personagem que o viu ganha 1d8 de Stress por Dado de Vida que {name} tinha ({hd}).",
+        "NoWitness": "Nenhuma outra personagem estava lá para ver.",
+        "Absent": "Estas personagens não estavam presentes. Clica quando cada uma souber da morte de {name} (metade do Stress):",
+        "Learns": "{name} sabe da notícia"
+      }
+    }
+  }
+}

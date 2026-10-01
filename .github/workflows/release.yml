@@ -1,0 +1,50 @@
+name: Release
+
+# Publish a GitHub release with a tag like v0.8.0. This builds the compendium, sets the version and the
+# download link in module.json, zips the module and attaches module.json and stress-and-resolve.zip to the
+# release, so Foundry can install and update it from the manifest URL.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm test
+      - run: npm run build:packs
+
+      - name: Set version and download link
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          node -e '
+            const fs = require("fs");
+            const { TAG, REPO } = process.env;
+            const m = JSON.parse(fs.readFileSync("module.json", "utf8"));
+            m.version = TAG.replace(/^v/, "");
+            m.manifest = `https://github.com/${REPO}/releases/latest/download/module.json`;
+            m.download = `https://github.com/${REPO}/releases/download/${TAG}/stress-and-resolve.zip`;
+            fs.writeFileSync("module.json", JSON.stringify(m, null, 2) + "\n");
+          '
+
+      - name: Zip the module
+        run: |
+          mkdir -p dist/stress-and-resolve
+          cp -r module.json README.md lang packs scripts sounds styles dist/stress-and-resolve/
+          rm -f dist/stress-and-resolve/packs/*/LOCK
+          cd dist && zip -r ../stress-and-resolve.zip stress-and-resolve
+
+      - name: Attach to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" module.json stress-and-resolve.zip --clobber

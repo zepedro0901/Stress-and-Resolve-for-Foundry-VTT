@@ -1,0 +1,129 @@
+{
+  "_id": "srSoothe00000001",
+  "name": "Soothe",
+  "type": "spell",
+  "img": "icons/magic/life/heart-hand-gold-green.webp",
+  "system": {
+    "description": {
+      "value": "<p>A creature you touch heals Stress Points equal to 1d4 + your spellcasting modifier. This spell has no effect on Undead or Constructs.</p><p><strong>Using a Higher-Level Spell Slot.</strong> The healing increases by 1d4 for each spell slot level above 1.</p><p><em>Darkest Dungeons and Dragons (zecron8): Druid and Ranger spell.</em> The Stress and Resolve module rolls the healing when the spell is cast at targeted characters.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "Darkest Dungeons and Dragons",
+      "rules": "2024",
+      "book": "Darkest Dungeons and Dragons v1.4",
+      "license": ""
+    },
+    "activation": {
+      "type": "action",
+      "value": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": "inst"
+    },
+    "target": {
+      "affects": {
+        "type": "creature",
+        "count": "1",
+        "choice": false,
+        "special": ""
+      },
+      "template": {
+        "units": "",
+        "contiguous": false,
+        "type": ""
+      }
+    },
+    "range": {
+      "units": "touch",
+      "special": ""
+    },
+    "uses": {
+      "max": "",
+      "recovery": [],
+      "spent": 0
+    },
+    "level": 1,
+    "school": "evo",
+    "properties": [
+      "vocal",
+      "somatic",
+      "material"
+    ],
+    "materials": {
+      "value": "leaves, flowers",
+      "consumed": false,
+      "cost": 0,
+      "supply": 0
+    },
+    "method": "spell",
+    "prepared": 0,
+    "identifier": "soothe",
+    "activities": {
+      "srSootheActivity": {
+        "_id": "srSootheActivity",
+        "type": "utility",
+        "name": "Soothe",
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "override": false
+        },
+        "consumption": {
+          "targets": [],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "units": "inst",
+          "concentration": false,
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "override": false
+        },
+        "target": {
+          "prompt": true,
+          "override": false,
+          "affects": {
+            "choice": false
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "roll": {
+          "prompt": false,
+          "visible": false,
+          "name": "",
+          "formula": ""
+        },
+        "sort": 0
+      }
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.360",
+    "systemId": "dnd5e",
+    "systemVersion": "6.0.5",
+    "createdTime": 1790800000000,
+    "modifiedTime": 1790800000000
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!srSoothe00000001"
+}

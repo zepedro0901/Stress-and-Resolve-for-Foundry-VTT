@@ -1,0 +1,100 @@
+{
+  "_id": "srCalmingSpell01",
+  "name": "Calming Spell",
+  "type": "feat",
+  "img": "icons/magic/life/heart-cross-blue.webp",
+  "system": {
+    "description": {
+      "value": "<blockquote><p>Cost: 2 Sorcery Points</p></blockquote><p>When you cast a spell that targets your allies, you can spend 2 Sorcery Points to heal Stress Points for each target equal to your Charisma modifier.</p><p><em>Darkest Dungeons and Dragons (zecron8): Sorcerer Metamagic option.</em> Target the allies and use this feature: the Stress and Resolve module spends the points from Font of Magic and heals the Stress.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "Darkest Dungeons and Dragons",
+      "rules": "2024",
+      "book": "Darkest Dungeons and Dragons v1.4",
+      "license": ""
+    },
+    "uses": {
+      "max": "",
+      "spent": 0,
+      "recovery": []
+    },
+    "type": {
+      "value": "class",
+      "subtype": "metamagic"
+    },
+    "prerequisites": {
+      "level": null,
+      "repeatable": false
+    },
+    "properties": [],
+    "requirements": "Sorcerer",
+    "identifier": "calming-spell",
+    "activities": {
+      "srCalmingActivit": {
+        "_id": "srCalmingActivit",
+        "type": "utility",
+        "name": "Calming Spell",
+        "activation": {
+          "type": "special",
+          "value": null,
+          "override": false,
+          "condition": "When you cast a spell that targets your allies"
+        },
+        "consumption": {
+          "targets": [],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": false
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "units": "inst",
+          "concentration": false,
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "override": false
+        },
+        "target": {
+          "prompt": true,
+          "override": false,
+          "affects": {
+            "choice": false
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "roll": {
+          "prompt": false,
+          "visible": false,
+          "name": "",
+          "formula": ""
+        },
+        "sort": 0
+      }
+    },
+    "enchant": {}
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.360",
+    "systemId": "dnd5e",
+    "systemVersion": "6.0.5",
+    "createdTime": 1790800000000,
+    "modifiedTime": 1790800000000
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!srCalmingSpell01"
+}

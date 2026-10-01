@@ -1,0 +1,75 @@
+{
+  "id": "stress-and-resolve",
+  "title": "Stress and Resolve",
+  "description": "Stress, Resolve checks, afflictions and virtues for D&D 5e, based on Darkest Dungeons and Dragons v1.4 by zecron8 (used with permission).",
+  "version": "0.8.0",
+  "authors": [
+    {
+      "name": "zepedro0901",
+      "url": "https://github.com/zepedro0901",
+      "flags": {
+        "role": "Foundry VTT module"
+      }
+    },
+    {
+      "name": "zecron8",
+      "flags": {
+        "role": "Original rules: Darkest Dungeons and Dragons v1.4"
+      }
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.0",
+          "verified": "6.0.5"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/stress-and-resolve.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "pt-PT",
+      "name": "Português (Portugal)",
+      "path": "lang/pt-PT.json"
+    }
+  ],
+  "socket": true,
+  "packs": [
+    {
+      "name": "items",
+      "label": "Stress and Resolve: Spells and Features",
+      "path": "packs/items",
+      "type": "Item",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    }
+  ],
+  "url": "https://github.com/zepedro0901/Stress-and-Resolve-for-Foundry-VTT",
+  "manifest": "https://github.com/zepedro0901/Stress-and-Resolve-for-Foundry-VTT/releases/latest/download/module.json",
+  "download": "https://github.com/zepedro0901/Stress-and-Resolve-for-Foundry-VTT/releases/download/v0.8.0/stress-and-resolve.zip",
+  "bugs": "https://github.com/zepedro0901/Stress-and-Resolve-for-Foundry-VTT/issues",
+  "readme": "https://github.com/zepedro0901/Stress-and-Resolve-for-Foundry-VTT#readme"
+}

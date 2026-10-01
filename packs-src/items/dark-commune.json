@@ -1,0 +1,50 @@
+{
+  "_id": "srDarkCommune001",
+  "name": "Dark Commune",
+  "type": "feat",
+  "img": "icons/magic/control/hypnosis-mesmerism-eye.webp",
+  "system": {
+    "description": {
+      "value": "<p>As part of a Long Rest, you can expend a Warlock spell slot to commune with your Patron and ask for protection. You and all allies taking the Long Rest suffer Stress Points equal to your Charisma modifier, but you will be awoken by your Patron if danger is near.</p><p><em>Darkest Dungeons and Dragons (zecron8): Eldritch Invocation.</em> The Stress and Resolve module adds a <strong>Dark Commune</strong> box to your Long Rest window.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "Darkest Dungeons and Dragons",
+      "rules": "2024",
+      "book": "Darkest Dungeons and Dragons v1.4",
+      "license": ""
+    },
+    "uses": {
+      "max": "",
+      "spent": 0,
+      "recovery": []
+    },
+    "type": {
+      "value": "class",
+      "subtype": "eldritchInvocation"
+    },
+    "prerequisites": {
+      "level": 1,
+      "repeatable": false
+    },
+    "properties": [],
+    "requirements": "Warlock",
+    "identifier": "dark-commune",
+    "activities": {},
+    "enchant": {}
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.360",
+    "systemId": "dnd5e",
+    "systemVersion": "6.0.5",
+    "createdTime": 1790800000000,
+    "modifiedTime": 1790800000000
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!srDarkCommune001"
+}

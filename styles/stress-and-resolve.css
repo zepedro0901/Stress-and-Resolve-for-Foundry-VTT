@@ -1,0 +1,298 @@
+/* Stress and Resolve */
+
+:root {
+  --sr-stress-1: #3b1f5c;
+  --sr-stress-2: #7a3fb8;
+  --sr-over-1: #6b1d1d;
+  --sr-over-2: #c0392b;
+  --sr-virtue: #c9a227;
+  --sr-affliction: #a23b3b;
+}
+
+/* Sheet meter: reuses the dnd5e hit dice meter, recoloured */
+.dnd5e2.character .sr-stress-group .label { gap: .35rem; }
+.dnd5e2.character .meter.sr-stress { cursor: var(--cursor-pointer, pointer); position: relative; }
+.dnd5e2.character .meter.sr-stress.progress::before {
+  background: linear-gradient(to right, var(--sr-stress-1) 0%, var(--sr-stress-2) 100%);
+}
+.dnd5e2.character .meter.sr-stress.sr-over.progress::before,
+.dnd5e2.character .meter.sr-stress.sr-mortal.progress::before {
+  background: linear-gradient(to right, var(--sr-over-1) 0%, var(--sr-over-2) 100%);
+}
+.dnd5e2.character .meter.sr-stress.sr-mortal { animation: sr-pulse 1.6s ease-in-out infinite; }
+.dnd5e2.character .meter.sr-stress .sr-input {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  text-align: center;
+  border: none;
+  background: none;
+  font-weight: bold;
+  color: var(--color-text-light-0);
+}
+
+@keyframes sr-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 8px 2px var(--sr-over-2); }
+}
+
+/* Affliction / virtue badge */
+.sr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  padding: 0 .35rem;
+  border-radius: 3px;
+  font-size: var(--font-size-11, 11px);
+  line-height: 1.5;
+  color: #fff;
+  text-transform: none;
+}
+.sr-badge img { inline-size: 14px; block-size: 14px; border: none; filter: invert(1); }
+.sr-badge.sr-virtue { background: var(--sr-virtue); color: #1b1b1b; }
+.sr-badge.sr-virtue img { filter: none; }
+.sr-badge.sr-affliction { background: var(--sr-affliction); }
+
+/* Chat cards */
+.sr-card h3 { margin: 0 0 .25rem; font-size: var(--font-size-14, 14px); border: none; }
+.sr-card p { margin: .15rem 0; }
+.sr-card .sr-result { font-weight: bold; }
+.sr-card .sr-reason, .sr-card .sr-desc { font-size: var(--font-size-11, 11px); opacity: .8; }
+.sr-card.sr-virtue { border-inline-start: 3px solid var(--sr-virtue); padding-inline-start: .4rem; }
+.sr-card.sr-affliction { border-inline-start: 3px solid var(--sr-affliction); padding-inline-start: .4rem; }
+
+/* Rest dialog */
+.sr-rest .hint { margin: 0 0 .25rem; }
+
+/* Party window */
+.sr-party { display: flex; flex-direction: column; gap: .5rem; margin: 0; padding: 0; }
+.sr-party-row { display: flex; gap: .5rem; align-items: center; }
+.sr-party-row .sr-portrait { inline-size: 36px; block-size: 36px; object-fit: cover; border-radius: 4px; border: none; }
+.sr-party-body { flex: 1; display: flex; flex-direction: column; gap: .2rem; }
+.sr-party-name { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
+.sr-bar {
+  position: relative;
+  block-size: 16px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, .35);
+  overflow: hidden;
+}
+.sr-bar .sr-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(to right, var(--sr-stress-1), var(--sr-stress-2));
+}
+.sr-bar.sr-over .sr-fill, .sr-bar.sr-mortal .sr-fill {
+  background: linear-gradient(to right, var(--sr-over-1), var(--sr-over-2));
+}
+.sr-bar span {
+  position: relative;
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  line-height: 16px;
+  color: #fff;
+  text-shadow: 0 0 2px #000;
+}
+.sr-party-button { flex: 0 0 100%; }
+
+/* ------------------------------------------------------------------ */
+/*  Resolve reveal overlay                                             */
+/* ------------------------------------------------------------------ */
+
+.sr-reveal {
+  --sr-accent: #ff3b2f;
+  --sr-accent-soft: rgba(255, 59, 47, .35);
+  --sr-duration: 4000ms;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  overflow: hidden;
+  animation: sr-reveal-life var(--sr-duration) ease forwards;
+}
+.sr-reveal-virtue { --sr-accent: #ffd24a; --sr-accent-soft: rgba(255, 210, 74, .35); }
+.sr-reveal-mortality { --sr-accent: #b3001b; --sr-accent-soft: rgba(179, 0, 27, .45); }
+
+.sr-reveal-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 42%, transparent 18%, rgba(0, 0, 0, .55) 48%, rgba(0, 0, 0, .9) 85%),
+    radial-gradient(ellipse at 50% 42%, transparent 30%, var(--sr-accent-soft) 100%);
+}
+.sr-reveal-mortality .sr-reveal-vignette { animation: sr-heartbeat 900ms ease-in-out infinite; }
+
+.sr-reveal-rays {
+  position: absolute;
+  inset: -50%;
+  background: repeating-conic-gradient(from 0deg at 50% 50%,
+    rgba(255, 224, 138, .16) 0deg 6deg, transparent 6deg 18deg);
+  mask-image: radial-gradient(circle at 50% 50%, transparent 8%, #000 22%, transparent 60%);
+  animation: sr-spin 14s linear infinite;
+}
+.sr-reveal-cracks {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 48.6%, rgba(255, 59, 47, .16) 49.4%, transparent 50.2%),
+    linear-gradient(62deg, transparent 49%, rgba(255, 59, 47, .12) 49.6%, transparent 50.3%),
+    linear-gradient(160deg, transparent 49.2%, rgba(255, 59, 47, .1) 49.7%, transparent 50.2%);
+  opacity: 0;
+  animation: sr-cracks 600ms 650ms ease-out forwards;
+}
+
+.sr-reveal-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.1rem 2rem;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, .88) 20%, rgba(0, 0, 0, .88) 80%, transparent);
+  border-top: 2px solid var(--sr-accent);
+  border-bottom: 2px solid var(--sr-accent);
+  box-shadow: 0 0 40px var(--sr-accent-soft);
+  clip-path: inset(0 50% 0 50%);
+  animation: sr-band-open 450ms 150ms cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+.sr-reveal-portrait {
+  width: clamp(64px, 9vw, 120px);
+  height: clamp(64px, 9vw, 120px);
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--sr-accent);
+  box-shadow: 0 0 24px var(--sr-accent);
+  opacity: 0;
+  animation: sr-fade-in 400ms 350ms ease forwards;
+}
+
+.sr-reveal-text { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.sr-reveal-kicker {
+  font-family: "Signika", sans-serif;
+  font-size: clamp(14px, 1.6vw, 22px);
+  font-style: italic;
+  color: #e8e0d0;
+  letter-spacing: .06em;
+  opacity: 0;
+  animation: sr-fade-in 400ms 250ms ease forwards;
+}
+
+.sr-reveal-word {
+  font-family: "Modesto Condensed", "Signika", serif;
+  font-weight: bold;
+  font-size: min(clamp(48px, 9vw, 150px), calc(64vw / (var(--sr-chars, 9) * .62)));
+  line-height: .95;
+  white-space: nowrap;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sr-accent);
+  text-shadow: 0 0 18px var(--sr-accent), 0 0 42px var(--sr-accent), 0 4px 0 #000;
+  opacity: 0;
+  transform: scale(2.4);
+  filter: blur(8px);
+  animation: sr-slam 420ms 650ms cubic-bezier(.2, 1.4, .4, 1) forwards;
+}
+.sr-reveal-affliction .sr-reveal-word,
+.sr-reveal-mortality .sr-reveal-word { animation: sr-slam 420ms 650ms cubic-bezier(.2, 1.4, .4, 1) forwards, sr-jitter 90ms 1100ms steps(2) 8; }
+.sr-reveal-virtue .sr-reveal-word { color: #fff3c4; }
+
+.sr-reveal-detail {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: "Modesto Condensed", "Signika", serif;
+  font-size: clamp(22px, 3vw, 44px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 10px var(--sr-accent);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: sr-rise 450ms 1150ms ease-out forwards;
+}
+.sr-reveal-detail img { width: 1.1em; height: 1.1em; border: none; filter: invert(1) drop-shadow(0 0 6px var(--sr-accent)); }
+
+@keyframes sr-reveal-life {
+  0% { opacity: 0; }
+  6% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes sr-band-open { to { clip-path: inset(0 0 0 0); } }
+@keyframes sr-fade-in { to { opacity: 1; } }
+@keyframes sr-rise { to { opacity: 1; transform: translateY(0); } }
+@keyframes sr-slam {
+  0% { opacity: 0; transform: scale(2.4); filter: blur(8px); }
+  70% { opacity: 1; transform: scale(.94); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes sr-jitter {
+  0% { transform: translate(2px, -1px); }
+  100% { transform: translate(-2px, 1px); }
+}
+@keyframes sr-cracks { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: .6; } }
+@keyframes sr-spin { to { transform: rotate(360deg); } }
+@keyframes sr-heartbeat {
+  0%, 100% { opacity: .85; }
+  15% { opacity: 1; }
+  30% { opacity: .8; }
+  45% { opacity: 1; }
+}
+
+/* CSS fallback shake for the canvas */
+#board.sr-shake { animation: sr-shake 450ms linear; }
+@keyframes sr-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(calc(var(--sr-shake) * -1), calc(var(--sr-shake) * .5)); }
+  40% { transform: translate(var(--sr-shake), calc(var(--sr-shake) * -.5)); }
+  60% { transform: translate(calc(var(--sr-shake) * -.6), calc(var(--sr-shake) * -.3)); }
+  80% { transform: translate(calc(var(--sr-shake) * .4), calc(var(--sr-shake) * .2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-reveal *, .sr-reveal { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .sr-reveal { animation: sr-reveal-life var(--sr-duration) linear forwards !important; }
+}
+
+/* Damage die reroll button (Powerful, Rapturous) */
+.sr-reroll {
+  display: block;
+  width: 100%;
+  margin-top: .35rem;
+  border: 1px solid var(--sr-virtue);
+  background: rgba(201, 162, 39, .15);
+  font-size: var(--font-size-12, 12px);
+}
+.sr-reroll:hover { background: rgba(201, 162, 39, .3); }
+
+/* Turn reminder (whispered) */
+.sr-card.sr-reminder h3 { display: flex; gap: .35rem; align-items: center; }
+.sr-card.sr-reminder ul { margin: .25rem 0 0; padding-inline-start: 1.1rem; }
+.sr-card.sr-reminder li { margin: .15rem 0; }
+.sr-card.sr-reminder h4 { margin: .4rem 0 0; font-size: var(--font-size-12, 12px); text-transform: uppercase; letter-spacing: .04em; border: none; }
+.sr-card.sr-reminder ul.sr-auto { opacity: .8; }
+
+/* Temporary HP protecting Stress */
+.sr-stress .sr-temp {
+  margin-left: .35rem;
+  color: #5fd3f3;
+  font-weight: bold;
+  text-shadow: 0 0 2px #000;
+}
+.sr-party .sr-temp { color: #1f8fb0; font-style: normal; font-weight: bold; }
+.sr-temp-card { border-left: 3px solid #5fd3f3; }
+
+/* Spend-a-Stress-Die buttons on spell and feat cards */
+.sr-die-button {
+  display: block;
+  width: 100%;
+  margin-top: .3rem;
+  line-height: 1.6;
+}
+.sr-checklist { display: flex; flex-direction: column; gap: .25rem; margin: .4rem 0; }
